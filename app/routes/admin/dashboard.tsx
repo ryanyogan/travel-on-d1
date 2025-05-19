@@ -2,10 +2,11 @@ import { Header } from "~/components/header";
 import { StatsCard } from "~/components/stats-card";
 import { TripCard } from "~/components/trip-card";
 import { allTrips, dashboardStats } from "~/constants";
+import type { Route } from "./+types/dashboard";
 
 const user = { name: "Ryan" };
 
-export default function Dashboard() {
+export default function Dashboard({}: Route.ComponentProps) {
   return (
     <main className="dashboard wrapper overflow-y-scroll h-full">
       <Header
