@@ -9,17 +9,4 @@ export const auth = betterAuth({
     schema,
     provider: "sqlite",
   }),
-  providers: [
-    {
-      id: "google",
-      type: "oauth",
-      // placeholder values – CLI doesn’t execute, so env vars aren’t needed here
-      clientId: "GOOGLE_CLIENT_ID",
-      clientSecret: "GOOGLE_CLIENT_SECRET",
-      authorizeUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-      tokenUrl: "https://oauth2.googleapis.com/token",
-      userInfoUrl: "https://openidconnect.googleapis.com/v1/userinfo",
-      scope: "openid email profile",
-    },
-  ],
 });

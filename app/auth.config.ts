@@ -14,22 +14,9 @@ export function createAuth(
       google: {
         clientId: env.GOOGLE_CLIENT_ID!, // ← from wrangler secret
         clientSecret: env.GOOGLE_CLIENT_SECRET!,
-        redirectURI: env.BETTER_AUTH_BASE_URL + "/api/auth/callback/google",
+        redirectURI: env.BETTER_AUTH_BASE_URL + "api/auth/callback/google",
       },
     },
-
-    // providers: [
-    //   {
-    //     id: "google",
-    //     type: "oauth",
-    //     clientId: env.GOOGLE_CLIENT_ID!, // ← from wrangler secret
-    //     clientSecret: env.GOOGLE_CLIENT_SECRET!,
-    //     authorizeUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-    //     tokenUrl: "https://oauth2.googleapis.com/token",
-    //     userInfoUrl: "https://openidconnect.googleapis.com/v1/userinfo",
-    //     scope: "openid email profile",
-    //   },
-    // ],
 
     // session & cookie security
     secret: env.BETTER_AUTH_SECRET!, // generate one, `wrangler secret put`
