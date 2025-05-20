@@ -8,7 +8,7 @@
     "database/**/*",
     "workers/**/*",
     "worker-configuration.d.ts"
-, "database"  ],
+, "database", "auth.config.ts", "auth.ts"  ],
   "compilerOptions": {
     "composite": true,
     "strict": true,
