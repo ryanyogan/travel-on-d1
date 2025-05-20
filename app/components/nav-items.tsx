@@ -1,12 +1,16 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
 import { sidebarItems } from "~/constants";
+import { authClient } from "~/lib/auth-client";
 import { cn } from "~/lib/utils";
+import { clientLoader } from "~/routes/admin/layout";
 
 export function NavItems({ onClose }: { onClose?: () => void }) {
-  const user = {
-    name: "Ryan",
-    email: "ryan@jk.com",
-    imageUrl: "/assets/images/david.webp",
+  const data = useLoaderData<typeof clientLoader>();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    navigate("/sign-in");
   };
 
   return (
@@ -41,13 +45,17 @@ export function NavItems({ onClose }: { onClose?: () => void }) {
         </nav>
 
         <footer className="nav-footer">
-          <img src={user.imageUrl} alt={user.name} />
+          <img
+            src={data?.user?.image ?? "/assets/icons/dummy.svg"}
+            alt={data?.user.name}
+            referrerPolicy="no-referrer"
+          />
           <article>
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
+            <h2>{data?.user?.name}</h2>
+            <p>{data?.user?.email}</p>
           </article>
 
-          <button onClick={() => {}} className="cursor-pointer">
+          <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"
               alt="logout"
