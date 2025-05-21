@@ -2,10 +2,10 @@ import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
 import { sidebarItems } from "~/constants";
 import { authClient } from "~/lib/auth-client";
 import { cn } from "~/lib/utils";
-import { clientLoader } from "~/routes/admin/layout";
+import type { loader } from "~/routes/admin/layout";
 
 export function NavItems({ onClose }: { onClose?: () => void }) {
-  const data = useLoaderData<typeof clientLoader>();
+  const data = useLoaderData<typeof loader>();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -47,7 +47,7 @@ export function NavItems({ onClose }: { onClose?: () => void }) {
         <footer className="nav-footer">
           <img
             src={data?.user?.image ?? "/assets/icons/dummy.svg"}
-            alt={data?.user.name}
+            alt={data?.user?.name}
             referrerPolicy="no-referrer"
           />
           <article>

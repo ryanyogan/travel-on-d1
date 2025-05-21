@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
+    "start": "react-router-serve ./build/server/index.js",
     "preview": "npm run build && vite preview",
     "deploy": "npm run build && wrangler deploy",
     "db:generate": "dotenv -- drizzle-kit generate",
@@ -21,6 +22,9 @@
     "@radix-ui/react-tooltip": "^1.2.6",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "@sentry/cloudflare": "^9.21.0",
+    "@sentry/profiling-node": "^9.21.0",
+    "@sentry/react-router": "^9.21.0",
     "better-auth": "^1.2.8",
     "better-sqlite3": "^11.10.0",
     "class-variance-authority": "^0.7.1",

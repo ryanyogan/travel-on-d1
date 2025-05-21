@@ -3,16 +3,15 @@ import { Header } from "~/components/header";
 import { StatsCard } from "~/components/stats-card";
 import { TripCard } from "~/components/trip-card";
 import { allTrips, dashboardStats } from "~/constants";
-import { authClient } from "~/lib/auth-client";
 import type { Route } from "./+types/dashboard";
 
-export async function clientLoader() {
-  const user = await authClient.getSession();
-  if (!user?.data?.user) {
+export async function loader({ context, request }: Route.LoaderArgs) {
+  const data = await context.auth.api.getSession(request);
+  if (!data?.user) {
     throw redirect("/sign-in");
   }
 
-  return { user: user.data.user };
+  return { user: data.user };
 }
 
 export default function Dashboard({ loaderData }: Route.ComponentProps) {

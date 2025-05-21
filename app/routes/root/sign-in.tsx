@@ -3,7 +3,7 @@ import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { authClient } from "~/lib/auth-client";
 
-export async function clientLoader() {
+export async function loader() {
   try {
     const user = await authClient.getSession();
     if (user.data?.user.id) {

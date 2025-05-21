@@ -1,21 +1,26 @@
+import { eq } from "drizzle-orm";
 import { data, Outlet, redirect } from "react-router";
 import { MobileSidebar } from "~/components/mobile-sidebar";
 import { NavItems } from "~/components/nav-items";
-import { authClient } from "~/lib/auth-client";
+import * as schema from "~/database/schema";
 import type { Route } from "./+types/layout";
 
-export async function clientLoader({}: Route.LoaderArgs) {
+export async function loader({ context, request }: Route.LoaderArgs) {
   try {
-    const user = await authClient.getSession();
-    if (!user.data?.user.id) {
+    const user = await context.auth.api.getSession(request);
+    if (!user?.user.id) {
       throw redirect("/sign-in");
     }
 
-    // if (user.data.user.status === "user") {
+    const userQuery = await context.db.query.user.findFirst({
+      where: eq(schema.user.id, user.user.id),
+    });
+
+    // if (userQuery?.status === "USER") {
     //   return redirect("/");
     // }
 
-    return data({ user: user.data.user });
+    return data({ user: userQuery });
   } catch (error) {
     console.error("Error loading client session:", error);
   }
