@@ -17,6 +17,20 @@ export const user = sqliteTable("user", {
   status: text("status").default("USER"),
 });
 
+export const trip = sqliteTable("trip", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  tripDetails: text("trip_details").notNull(),
+  imageUrls: text("image_urls").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
+
 export const session = sqliteTable("session", {
   id: text("id").primaryKey(),
   expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),

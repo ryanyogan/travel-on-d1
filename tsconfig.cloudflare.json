@@ -9,6 +9,14 @@
     "workers/**/*",
     "worker-configuration.d.ts"
 , "database", "auth.config.ts", "auth.ts"  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "out-tsc",
+    "out-tsc/**/*",
+    ".wrangler"
+  ],
   "compilerOptions": {
     "composite": true,
     "strict": true,
@@ -25,6 +33,7 @@
       "~/*": ["./app/*"]
     },
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": false
   }
 }

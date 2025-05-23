@@ -15,6 +15,13 @@
       "when": 1747757825362,
       "tag": "0001_cold_nick_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1748027955512,
+      "tag": "0002_nappy_matthew_murdock",
+      "breakpoints": true
     }
   ]
 }
