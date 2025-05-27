@@ -1,4 +1,5 @@
 import type { AppLoadContext } from "react-router";
+import { parseTripData } from "./utils";
 
 export async function getAllTrips(
   ctx: AppLoadContext,
@@ -17,7 +18,11 @@ export async function getAllTrips(
   }
 
   return {
-    allTrips: trips,
+    allTrips: trips.map((trip) => ({
+      ...trip,
+      ...parseTripData(trip.tripDetails),
+      imageUrls: trip.imageUrls.split(",") ?? [],
+    })),
     total: trips.length,
   };
 }

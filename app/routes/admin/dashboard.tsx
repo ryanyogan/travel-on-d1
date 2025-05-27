@@ -2,19 +2,37 @@ import { redirect } from "react-router";
 import { Header } from "~/components/header";
 import { StatsCard } from "~/components/stats-card";
 import { TripCard } from "~/components/trip-card";
-import { allTrips, dashboardStats } from "~/constants";
+import { getUsersAndTripsStats } from "~/lib/dashboard";
+import { getAllTrips } from "~/lib/trips";
+import { parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/dashboard";
 
 export async function loader({ context, request }: Route.LoaderArgs) {
-  const data = await context.auth.api.getSession(request);
-  if (!data?.user) {
+  const [user, dashboardStats, trips] = await Promise.all([
+    context.auth.api.getSession(request),
+    getUsersAndTripsStats(context),
+    getAllTrips(context, 4, 0),
+  ]);
+
+  if (!user?.user) {
     throw redirect("/sign-in");
   }
 
-  return { user: data.user };
+  return {
+    user: user.user,
+    dashboardStats,
+    allTrips: trips.allTrips.map((trip) => ({
+      ...trip,
+      ...parseTripData(trip.tripDetails),
+      imageUrls: trip.imageUrls.split(",") ?? [],
+    })),
+  };
 }
 
 export default function Dashboard({ loaderData }: Route.ComponentProps) {
+  const dashboardStats = loaderData.dashboardStats;
+  const allTrips = loaderData.allTrips as Trip[] | [];
+
   return (
     <main className="dashboard wrapper overflow-y-scroll">
       <Header
@@ -53,11 +71,11 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
           {allTrips.slice(0, 4).map((trip) => (
             <TripCard
               key={trip.id}
-              id={trip.id.toString()}
+              id={trip.id}
               name={trip.name}
               imageUrl={trip.imageUrls[0]}
-              location={trip.itinerary?.[0].location ?? ""}
-              tags={trip.tags}
+              location={trip.itinerary?.[0]?.location ?? ""}
+              tags={[trip.interests, trip.travelStyle]}
               price={trip.estimatedPrice}
             />
           ))}

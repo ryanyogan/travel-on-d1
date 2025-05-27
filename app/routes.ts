@@ -18,5 +18,9 @@ export default [
       route(":tripId", "routes/admin/trip-detail.tsx"),
     ]),
   ]),
+  layout("routes/root/page-layout.tsx", [
+    index("routes/root/travel-page.tsx"),
+    route("/travel/:tripId", "routes/root/travel-detail.tsx"),
+  ]),
   ...prefix("api/auth/:provider", [route("index", "routes/api/auth/index.ts")]),
 ] satisfies RouteConfig;
