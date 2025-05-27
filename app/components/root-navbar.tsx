@@ -28,7 +28,7 @@ export function RootNavbar() {
       )}
     >
       <header className="root-nav wrapper">
-        <Link to="/" className="link-logo">
+        <Link prefetch="intent" to="/" className="link-logo">
           <img
             src="/assets/icons/logo.svg"
             alt="logo"
@@ -40,6 +40,7 @@ export function RootNavbar() {
         <aside>
           {true && (
             <Link
+              prefetch="intent"
               to="/dashboard"
               className={cn("text-base font-normal text-white", {
                 "text-dark-100": location.pathname.startsWith("/travel"),

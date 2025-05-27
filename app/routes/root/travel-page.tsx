@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Suspense, useState } from "react";
+import { Await, Link, useSearchParams } from "react-router";
 import { Header } from "~/components/header";
+import { Spinner } from "~/components/spinner";
 import { TripCard } from "~/components/trip-card";
 import { Button } from "~/components/ui/button";
 import { getAllTrips } from "~/lib/trips";
-import { cn, parseTripData } from "~/lib/utils";
+import { cn } from "~/lib/utils";
 import type { Route } from "./+types/travel-page";
 
 const FeaturedDestination = ({
@@ -69,23 +70,18 @@ export const loader = async ({ request, context }: Route.LoaderArgs) => {
   const page = parseInt(url.searchParams.get("page") || "1", 10);
   const offset = (page - 1) * limit;
 
-  const [user, { allTrips, total }] = await Promise.all([
-    await context.auth.api.getSession(request),
-    await getAllTrips(context, limit, offset),
-  ]);
+  const user = await context.auth.api.getSession(request);
+
+  const allTripsPromise = getAllTrips(context, limit, offset);
 
   return {
-    trips: allTrips.map((trip) => ({
-      ...trip,
-      ...parseTripData(trip.tripDetails),
-      imageUrls: trip.imageUrls.split(",") ?? [],
-    })),
-    total,
+    trips: allTripsPromise,
+    user,
   };
 };
 
 const TravelPage = ({ loaderData }: Route.ComponentProps) => {
-  const trips = loaderData.trips as Trip[] | [];
+  const { trips, user } = loaderData;
 
   const [searchParams] = useSearchParams();
   const initialPage = Number(searchParams.get("page") || "1");
@@ -116,7 +112,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             <Link to="#trips">
               <Button
                 type="button"
-                className="button-class h-11 w-full md:w-[240px]"
+                className="button-class h-11 w-full md:w-[240px] cursor-pointer hover:-translate-x-1 hover:-translate-y-1"
               >
                 <span className="p-16-semibold text-white">Get Started</span>
               </Button>
@@ -191,19 +187,25 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           description="Browse well-planned trips designes for your travel style"
         />
 
-        <div className="trip-grid">
-          {trips.map((trip) => (
-            <TripCard
-              key={trip.id}
-              id={trip.id}
-              name={trip.name}
-              imageUrl={trip.imageUrls[0]}
-              location={trip.itinerary?.[0]?.location ?? ""}
-              tags={[trip.interests, trip.travelStyle]}
-              price={trip.estimatedPrice}
-            />
-          ))}
-        </div>
+        <Suspense fallback={<Spinner />}>
+          <Await resolve={trips}>
+            {({ allTrips }) => (
+              <div className="trip-grid w-full">
+                {allTrips.map((trip) => (
+                  <TripCard
+                    key={trip.id}
+                    id={trip.id}
+                    name={trip.name!}
+                    imageUrl={trip.imageUrls[0]}
+                    location={trip.itinerary?.[0]?.location ?? ""}
+                    tags={[trip.interests!, trip.travelStyle!]}
+                    price={trip.estimatedPrice!}
+                  />
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
 
         {/* <PagerComponent
           totalRecordsCount={loaderData.total}

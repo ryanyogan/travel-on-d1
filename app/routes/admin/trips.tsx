@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Await } from "react-router";
 import { Header } from "~/components/header";
+import { Spinner } from "~/components/spinner";
 import { TripCard } from "~/components/trip-card";
 import { getAllTrips } from "~/lib/trips";
 import type { Route } from "./+types/trips";
@@ -39,29 +40,27 @@ export default function Trips({ loaderData }: Route.ComponentProps) {
           Manage Created Trips
         </h1>
 
-        <div className="trip-grid mb-4">
-          <Suspense fallback={<div>Loading trips...</div>}>
-            <Await resolve={allTrips}>
-              {({ allTrips }) => {
-                return (
-                  <>
-                    {allTrips.map((trip) => (
-                      <TripCard
-                        key={trip.id}
-                        id={trip.id}
-                        name={trip.name!}
-                        imageUrl={trip.imageUrls[0]}
-                        location={trip.itinerary?.[0]?.location ?? ""}
-                        tags={[trip.interests!, trip.travelStyle!]}
-                        price={trip.estimatedPrice!}
-                      />
-                    ))}
-                  </>
-                );
-              }}
-            </Await>
-          </Suspense>
-        </div>
+        <Suspense fallback={<Spinner />}>
+          <Await resolve={allTrips}>
+            {({ allTrips }) => {
+              return (
+                <div className="trip-grid mb-4">
+                  {allTrips.map((trip) => (
+                    <TripCard
+                      key={trip.id}
+                      id={trip.id}
+                      name={trip.name!}
+                      imageUrl={trip.imageUrls[0]}
+                      location={trip.itinerary?.[0]?.location ?? ""}
+                      tags={[trip.interests!, trip.travelStyle!]}
+                      price={trip.estimatedPrice!}
+                    />
+                  ))}
+                </div>
+              );
+            }}
+          </Await>
+        </Suspense>
       </section>
     </main>
   );

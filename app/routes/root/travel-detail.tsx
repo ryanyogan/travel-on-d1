@@ -20,10 +20,7 @@ export async function loader({ params, context }: Route.LoaderArgs) {
 
   return {
     trip,
-    allTrips: trips.allTrips.map(({ tripDetails, imageUrls }) => ({
-      ...parseTripData(tripDetails),
-      imageUrls: imageUrls.split(",") ?? [],
-    })),
+    allTrips: trips.allTrips ?? [],
   };
 }
 

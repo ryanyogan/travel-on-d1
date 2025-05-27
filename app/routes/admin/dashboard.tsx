@@ -1,18 +1,20 @@
-import { redirect } from "react-router";
+import { Suspense } from "react";
+import { Await, redirect } from "react-router";
 import { Header } from "~/components/header";
+import { Spinner } from "~/components/spinner";
 import { StatsCard } from "~/components/stats-card";
 import { TripCard } from "~/components/trip-card";
 import { getUsersAndTripsStats } from "~/lib/dashboard";
 import { getAllTrips } from "~/lib/trips";
-import { parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/dashboard";
 
 export async function loader({ context, request }: Route.LoaderArgs) {
-  const [user, dashboardStats, trips] = await Promise.all([
+  const [user, dashboardStats] = await Promise.all([
     context.auth.api.getSession(request),
     getUsersAndTripsStats(context),
-    getAllTrips(context, 4, 0),
   ]);
+
+  const tripsPromise = getAllTrips(context, 4, 0);
 
   if (!user?.user) {
     throw redirect("/sign-in");
@@ -21,17 +23,13 @@ export async function loader({ context, request }: Route.LoaderArgs) {
   return {
     user: user.user,
     dashboardStats,
-    allTrips: trips.allTrips.map((trip) => ({
-      ...trip,
-      ...parseTripData(trip.tripDetails),
-      imageUrls: trip.imageUrls.split(",") ?? [],
-    })),
+    tripsPromise,
   };
 }
 
 export default function Dashboard({ loaderData }: Route.ComponentProps) {
   const dashboardStats = loaderData.dashboardStats;
-  const allTrips = loaderData.allTrips as Trip[] | [];
+  const { tripsPromise } = loaderData;
 
   return (
     <main className="dashboard wrapper overflow-y-scroll">
@@ -67,19 +65,25 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
 
       <section className="container">
         <h1 className="text-xl font-semibold text-dark-100">Created Trips</h1>
-        <div className="trip-grid">
-          {allTrips.slice(0, 4).map((trip) => (
-            <TripCard
-              key={trip.id}
-              id={trip.id}
-              name={trip.name}
-              imageUrl={trip.imageUrls[0]}
-              location={trip.itinerary?.[0]?.location ?? ""}
-              tags={[trip.interests, trip.travelStyle]}
-              price={trip.estimatedPrice}
-            />
-          ))}
-        </div>
+        <Suspense fallback={<Spinner />}>
+          <Await resolve={tripsPromise}>
+            {({ allTrips }) => (
+              <div className="trip-grid">
+                {allTrips.slice(0, 4).map((trip) => (
+                  <TripCard
+                    key={trip.id}
+                    id={trip.id}
+                    name={trip.name!}
+                    imageUrl={trip.imageUrls[0]}
+                    location={trip.itinerary?.[0]?.location ?? ""}
+                    tags={[trip.interests!, trip.travelStyle!]}
+                    price={trip.estimatedPrice!}
+                  />
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
       </section>
     </main>
   );

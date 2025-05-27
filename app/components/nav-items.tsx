@@ -15,7 +15,7 @@ export function NavItems({ onClose }: { onClose?: () => void }) {
 
   return (
     <section className="nav-items">
-      <Link to="/" className="link-logo">
+      <Link prefetch="intent" to="/" className="link-logo">
         <img src="/assets/icons/logo.svg" alt="Logo" className="size-[30px]" />
         <h1>Tourvisto</h1>
       </Link>
@@ -23,7 +23,12 @@ export function NavItems({ onClose }: { onClose?: () => void }) {
       <div className="container">
         <nav>
           {sidebarItems.map((item) => (
-            <NavLink to={item.href} key={item.id} onClick={() => onClose?.()}>
+            <NavLink
+              prefetch="intent"
+              to={item.href}
+              key={item.id}
+              onClick={() => onClose?.()}
+            >
               {({ isActive }) => (
                 <div
                   className={cn("group nav-item", {

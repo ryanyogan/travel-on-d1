@@ -21,12 +21,13 @@ export function TripCard({
 
   return (
     <Link
+      prefetch="intent"
       to={
         path.pathname === "/" || path.pathname.startsWith("/travel")
           ? `/travel/${id}`
           : `/trips/${id}`
       }
-      className="trip-card"
+      className="trip-card hover:shadow-lg transition-shadow duration-300 ease-in-out"
     >
       <img src={imageUrl} alt={name} />
       <article>
