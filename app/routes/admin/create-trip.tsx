@@ -32,6 +32,7 @@ import {
 } from "~/components/ui/select";
 import { comboBoxItems, selectItems } from "~/constants";
 import { world_map } from "~/constants/world_map";
+import { getCountries } from "~/lib/countries";
 import { cn, formatKey, parseMarkdownToJson } from "~/lib/utils";
 import type { Route } from "./+types/create-trip";
 
@@ -128,8 +129,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 }
 
 export async function loader() {
-  const response = await fetch("https://restcountries.com/v3.1/all");
-  const data = (await response.json()) as any;
+  const data = await getCountries();
 
   return data.map((country: any) => ({
     name: country.flag + " " + country.name.common,
