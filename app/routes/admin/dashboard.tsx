@@ -64,7 +64,9 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
       </section>
 
       <section className="container">
-        <h1 className="text-xl font-semibold text-dark-100">Created Trips</h1>
+        <h1 className="text-xl font-semibold text-dark-100">
+          Recently Created Trips
+        </h1>
         <Suspense fallback={<Spinner />}>
           <Await resolve={tripsPromise}>
             {({ allTrips }) => (

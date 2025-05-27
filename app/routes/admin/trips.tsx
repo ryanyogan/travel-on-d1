@@ -7,7 +7,7 @@ import { getAllTrips } from "~/lib/trips";
 import type { Route } from "./+types/trips";
 
 export async function loader({ context, request }: Route.LoaderArgs) {
-  const limit = 8;
+  const limit = 30;
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "1", 10);
   const offset = (page - 1) * limit;
