@@ -1,3 +1,6 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,100..900;1,100..900&display=swap";
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -33,14 +36,14 @@
   --color-red-50: #fff4ed;
   --color-red-100: #ff543d;
 
-  --background-image-auth: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/auth-img.png");
-  --background-image-hero: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114064/funroad/hero-img.png");
-  --background-image-card-1: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-1.png");
-  --background-image-card-2: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-2.png");
-  --background-image-card-3: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-3.png");
-  --background-image-card-4: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-4.png");
-  --background-image-card-5: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-5.png");
-  --background-image-card-6: url("https://res.cloudinary.com/dhujko6ey/image/upload/q_auto/v1748114066/funroad/card-img-6.png");
+  --background-image-auth: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/auth-img.png");
+  --background-image-hero: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114064/funroad/hero-img.png");
+  --background-image-card-1: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-1.png");
+  --background-image-card-2: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-2.png");
+  --background-image-card-3: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-3.png");
+  --background-image-card-4: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-4.png");
+  --background-image-card-5: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-5.png");
+  --background-image-card-6: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-6.png");
 
   --background-image-linear100: linear-gradient(
     105deg,

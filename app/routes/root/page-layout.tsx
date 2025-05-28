@@ -24,7 +24,7 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 
 export default function PageLayout() {
   return (
-    <div className="bg-light-200">
+    <div className="bg-light-200 font-inter">
       <RootNavbar />
       <Outlet />
     </div>

@@ -28,7 +28,7 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 
 export default function AdminLayout() {
   return (
-    <div className="admin-layout">
+    <div className="admin-layout font-inter">
       <MobileSidebar />
 
       <aside className="w-full max-w-[270px] hidden lg:block">
