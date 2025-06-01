@@ -3,9 +3,19 @@ import { InfoPill } from "~/components/info-pill";
 import { TripCard } from "~/components/trip-card";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { formatCurrency } from "~/lib/currency";
 import { getAllTrips, getTripById } from "~/lib/trips";
 import { cn, getFirstWord, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/travel-detail";
+
+export function meta() {
+  return [
+    {
+      title: "Tourvistio - Travel Detail",
+      description: "Explore detailed travel itineraries and plans.",
+    },
+  ];
+}
 
 export async function loader({ params, context }: Route.LoaderArgs) {
   const { tripId } = params;
@@ -140,7 +150,7 @@ export default function TravelDetail({ loaderData }: Route.ComponentProps) {
               </p>
             </article>
 
-            <h2>{estimatedPrice}</h2>
+            <h2>{formatCurrency(estimatedPrice!)}</h2>
           </section>
 
           <p className="text-sm md:text-lg font-normal text-dark-400">

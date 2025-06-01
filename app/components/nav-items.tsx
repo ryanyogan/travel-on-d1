@@ -1,3 +1,4 @@
+import { LucideLogOut } from "lucide-react";
 import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
 import { sidebarItems } from "~/constants";
 import { authClient } from "~/lib/auth-client";
@@ -61,11 +62,7 @@ export function NavItems({ onClose }: { onClose?: () => void }) {
           </article>
 
           <button onClick={handleLogout} className="cursor-pointer">
-            <img
-              src="/assets/icons/logout.svg"
-              alt="logout"
-              className="size-6"
-            />
+            <LucideLogOut className="size-5" />
           </button>
         </footer>
       </div>

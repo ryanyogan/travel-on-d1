@@ -3,6 +3,15 @@ import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { authClient } from "~/lib/auth-client";
 
+export function meta() {
+  return [
+    {
+      title: "Tourvistio - Sign In",
+      description: "Explore detailed travel itineraries and plans.",
+    },
+  ];
+}
+
 export async function loader() {
   try {
     const user = await authClient.getSession();

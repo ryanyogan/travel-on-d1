@@ -1,14 +1,17 @@
-@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap";
-@import "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,100..900;1,100..900&display=swap";
-
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/figtree";
+
 @custom-variant dark (&:is(.dark *));
 
-@theme {
+@theme inline {
   --font-figtree: "Figtree", sans-serif;
   --font-inter: "Inter", sans-serif;
+}
+
+@theme {
   --color-dark-100: #1f1f36;
   --color-dark-200: #141627;
   --color-dark-300: #101828;
@@ -36,14 +39,14 @@
   --color-red-50: #fff4ed;
   --color-red-100: #ff543d;
 
-  --background-image-auth: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/auth-img.png");
-  --background-image-hero: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114064/funroad/hero-img.png");
-  --background-image-card-1: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-1.png");
-  --background-image-card-2: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-2.png");
-  --background-image-card-3: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-3.png");
-  --background-image-card-4: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-4.png");
-  --background-image-card-5: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-5.png");
-  --background-image-card-6: url("https://res.cloudinary.com/dhujko6ey/image/upload/f_auto,q_auto,w_800/v1748114066/funroad/card-img-6.png");
+  --background-image-auth: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/auth-img.webp?tr=w-800,h-800");
+  --background-image-hero: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/hero-img.png?tr=w-1000,h-600");
+  --background-image-card-1: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-1.png?tr=w-800,h-800");
+  --background-image-card-2: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-2.png?tr=w-800,h-800");
+  --background-image-card-3: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-3.png?tr=w-800,h-800");
+  --background-image-card-4: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-4.png?tr=w-800,h-800");
+  --background-image-card-5: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-5.png?tr=w-800,h-800");
+  --background-image-card-6: url("https://ik.imagekit.io/hfft2vlbg/fun-road/images/card-img-6.png?tr=w-800,h-800");
 
   --background-image-linear100: linear-gradient(
     105deg,
@@ -355,7 +358,7 @@
   .admin-layout {
     @apply flex flex-col lg:flex-row h-screen w-full;
     .children {
-      @apply w-full h-full bg-light-200 pt-12 lg:pt-10;
+      @apply w-full h-full overflow-y-auto bg-light-200 pt-12 lg:pt-10;
     }
   }
   .user-trip {
@@ -643,6 +646,24 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  :root {
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+  }
+
+  .dark {
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+  }
 }
 
 @layer base {

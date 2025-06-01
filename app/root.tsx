@@ -10,10 +10,21 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
+export function links() {
+  return [
+    {
+      rel: "preload",
+      href: "https://ik.imagekit.io/hfft2vlbg/fun-road/images/hero-img.png?tr=w-1000,h-600",
+      as: "image",
+    },
+  ];
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />

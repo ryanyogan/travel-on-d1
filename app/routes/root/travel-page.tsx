@@ -24,6 +24,18 @@ export const loader = async ({ request, context }: Route.LoaderArgs) => {
   };
 };
 
+export function meta() {
+  return [
+    {
+      title: "Tourvistio - Travel",
+    },
+    {
+      name: "description",
+      content: "Explore detailed travel itineraries and plans.",
+    },
+  ];
+}
+
 export default function TravelPage({ loaderData }: Route.ComponentProps) {
   const { trips, user } = loaderData;
 
@@ -173,7 +185,7 @@ export default function TravelPage({ loaderData }: Route.ComponentProps) {
 
           <div>
             {["Terms & Conditions", "Privacy Policy"].map((item) => (
-              <Link to="/" key={item}>
+              <Link className="text-slate-500" to="/" key={item}>
                 {item}
               </Link>
             ))}

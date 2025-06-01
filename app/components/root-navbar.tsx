@@ -1,3 +1,4 @@
+import { LucideLogOut } from "lucide-react";
 import {
   Link,
   useLoaderData,
@@ -6,6 +7,13 @@ import {
   useParams,
 } from "react-router";
 import { cn } from "~/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export function RootNavbar() {
   const navigate = useNavigate();
@@ -38,31 +46,40 @@ export function RootNavbar() {
         </Link>
 
         <aside>
-          {true && (
-            <Link
-              prefetch="intent"
-              to="/dashboard"
-              className={cn("text-base font-normal text-white", {
-                "text-dark-100": location.pathname.startsWith("/travel"),
-              })}
-            >
-              Admin Panel
-            </Link>
-          )}
-
-          <img
-            src={user.image || "/assets/images/david.wepb"}
-            alt="user"
-            referrerPolicy="no-referrer"
-          />
-
-          <button onClick={handleLogout} className="cursor-pointer">
-            <img
-              src="/assets/icons/logout.svg"
-              alt="logout"
-              className="size-6 rotate-180"
-            />
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="cursor-pointer outline-none">
+                <img
+                  src={user.image || "/assets/images/david.wepb"}
+                  alt="user"
+                  referrerPolicy="no-referrer"
+                  className="rounded-full aspect-square"
+                />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem>
+                <Link prefetch="intent" to={`/profile/${user.id}`}>
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link prefetch="intent" to="/dashboard">
+                  Admin Panel
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <button
+                  onClick={handleLogout}
+                  className="cursor-pointer flex flex-row gap-x-2 items-center"
+                >
+                  <LucideLogOut className="size-4" />
+                  <span>Sign Out</span>
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </aside>
       </header>
     </nav>

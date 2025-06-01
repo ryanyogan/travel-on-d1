@@ -4,6 +4,10 @@ import { RootNavbar } from "~/components/root-navbar";
 import * as schema from "~/database/schema";
 import type { Route } from "./+types/page-layout";
 
+export function meta() {
+  return;
+}
+
 export async function loader({ context, request }: Route.LoaderArgs) {
   try {
     const user = await context.auth.api.getSession(request);

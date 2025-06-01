@@ -1,8 +1,12 @@
-import { data } from "react-router";
+import { eq } from "drizzle-orm";
+import { data, redirect } from "react-router";
 import { Header } from "~/components/header";
 import { InfoPill } from "~/components/info-pill";
 import { TripCard } from "~/components/trip-card";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
+import { trip } from "~/database/schema";
+import { formatCurrency } from "~/lib/currency";
 import { getAllTrips, getTripById } from "~/lib/trips";
 import { cn, getFirstWord, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/trip-detail";
@@ -28,6 +32,26 @@ export async function loader({ params, context }: Route.LoaderArgs) {
     allTrips: trips.allTrips,
     total: trips.total,
   });
+}
+
+export async function action({ request, params, context }: Route.ActionArgs) {
+  const { tripId } = params;
+  if (!tripId) {
+    throw new Error("Trip ID is required for deletion");
+  }
+  const formData = await request.formData();
+  const intent = formData.get("intent");
+  if (intent === "delete-trip") {
+    const deleteResponse = await context.db
+      .delete(trip)
+      .where(eq(trip.id, tripId));
+
+    if (deleteResponse.error) {
+      throw new Error(`Failed to delete trip: ${deleteResponse.error}`);
+    }
+
+    return redirect("/trips");
+  }
 }
 
 export default function TripDetail({ loaderData }: Route.ComponentProps) {
@@ -70,6 +94,17 @@ export default function TripDetail({ loaderData }: Route.ComponentProps) {
             />
           </div>
         </header>
+
+        <form method="post">
+          <Button
+            variant="destructive"
+            name="intent"
+            className="cursor-pointer"
+            value="delete-trip"
+          >
+            Delete this trip
+          </Button>
+        </form>
 
         <section className="gallery">
           {loaderData?.trip?.imageUrls?.split(",").map((imageUrl, i) => (
@@ -127,7 +162,7 @@ export default function TripDetail({ loaderData }: Route.ComponentProps) {
             </p>
           </article>
 
-          <h2>{tripDetails?.estimatedPrice}</h2>
+          <h2>{formatCurrency(tripDetails?.estimatedPrice!)}</h2>
         </section>
 
         <p className="text-sm md:text-lg font-normal text-dark-400">

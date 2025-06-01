@@ -20,7 +20,7 @@ export function FeaturedDestination({
         <article className="featured-card">
           <div
             className={cn(
-              "bg-white rounded-20 font-bold text-red-100 w-fit py-px px-3 text-sm"
+              "bg-white rounded-20 font-bold text-dark-100 w-fit py-px px-3 text-sm"
             )}
           >
             {rating}
@@ -37,7 +37,9 @@ export function FeaturedDestination({
 
             <figure className="flex gap-2 items-center">
               <img
-                src="/assets/images/david.webp"
+                height={50}
+                width={50}
+                src="https://ik.imagekit.io/hfft2vlbg/fun-road/images/david.webp?tr=w-50,h-50"
                 alt="user"
                 className={cn("size-4 rounded-full aspect-square", {
                   "size-11": bigCard,

@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router";
+import { formatCurrency } from "~/lib/currency";
 import { cn } from "~/lib/utils";
 import { Badge } from "./ui/badge";
 
@@ -27,9 +28,9 @@ export function TripCard({
           ? `/travel/${id}`
           : `/trips/${id}`
       }
-      className="trip-card hover:shadow-lg transition-shadow duration-300 ease-in-out"
+      className="trip-card hover:shadow-lg transition-shadow ease-in-out"
     >
-      <img src={imageUrl} alt={name} />
+      <img src={imageUrl} height={100} width={200} alt={name} />
       <article>
         <h2>{name}</h2>
         <figure>
@@ -38,7 +39,7 @@ export function TripCard({
             alt="Location"
             className="size-4"
           />
-          <figcaption>{location}</figcaption>
+          <figcaption className="text-slate-500">{location}</figcaption>
         </figure>
       </article>
 
@@ -56,7 +57,7 @@ export function TripCard({
         ))}
       </div>
 
-      <article className="tripCard-pill">{price}</article>
+      <article className="tripCard-pill">{formatCurrency(price)}</article>
     </Link>
   );
 }

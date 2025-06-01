@@ -78,3 +78,5 @@ export const verification = sqliteTable("verification", {
     () => /* @__PURE__ */ new Date()
   ),
 });
+
+export type SelectUser = typeof user.$inferSelect;

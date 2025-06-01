@@ -29,7 +29,6 @@ export async function getCountries() {
     key: `global:countries`,
     cache: lru,
     async getFreshValue() {
-      console.log("Fetching countries from API...");
       const response = await fetch("https://restcountries.com/v3.1/all");
       const data = (await response.json()) as any;
       return data;

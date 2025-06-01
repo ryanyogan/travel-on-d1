@@ -5,8 +5,6 @@ import * as schema from "~/database/schema";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { data, Form, redirect, useNavigation } from "react-router";
-import { ClientOnly } from "remix-utils/client-only";
-import { MapClient } from "~/components/map.client";
 import { Button } from "~/components/ui/button";
 import {
   Command,
@@ -31,7 +29,6 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { comboBoxItems, selectItems } from "~/constants";
-import { world_map } from "~/constants/world_map";
 import { getCountries } from "~/lib/countries";
 import { cn, formatKey, parseMarkdownToJson } from "~/lib/utils";
 import type { Route } from "./+types/create-trip";
@@ -152,14 +149,6 @@ export default function CreateTrip({
   >({});
   const navigation = useNavigation();
 
-  const mapData = {
-    country,
-    color: "#EA382E",
-    coordinates:
-      world_map.features.find((feature) => feature.properties.name === country)
-        ?.geometry.coordinates || [],
-  };
-
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
@@ -221,7 +210,7 @@ export default function CreateTrip({
             </PopoverContent>
           </Popover>
 
-          <Label>Country</Label>
+          <Label>Number of days</Label>
           <Input
             type="number"
             placeholder="Enter a number of days"
@@ -256,37 +245,28 @@ export default function CreateTrip({
             );
           })}
 
-          <div className="rounded-md">
-            <Label>Map</Label>
-            <ClientOnly fallback={<div>Loading...</div>}>
-              {() => <MapClient mapData={mapData} />}
-            </ClientOnly>
-          </div>
-
           <div className="bg-gray-200 h-px w-full" />
 
-          <div className="px-6 w-full">
-            <Button
-              disabled={navigation.state === "submitting"}
-              type="submit"
-              className="h-12 w-full cursor-pointer"
-            >
-              <img
-                className={cn(
-                  "size-5",
-                  navigation.state === "submitting" && "animate-spin"
-                )}
-                src={`/assets/icons/${
-                  navigation.state !== "idle" ? "loader.svg" : "magic-star.svg"
-                }`}
-              />
-              <span className="p-16-semibold text-white">
-                {navigation.state === "submitting"
-                  ? "Creating..."
-                  : "Create Trip"}
-              </span>
-            </Button>
-          </div>
+          <Button
+            disabled={navigation.state === "submitting"}
+            type="submit"
+            className="h-12 w-full cursor-pointer bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <img
+              className={cn(
+                "size-5",
+                navigation.state === "submitting" && "animate-spin"
+              )}
+              src={`/assets/icons/${
+                navigation.state !== "idle" ? "loader.svg" : "magic-star.svg"
+              }`}
+            />
+            <span className="font-normal text-white">
+              {navigation.state === "submitting"
+                ? "Creating..."
+                : "Create Trip"}
+            </span>
+          </Button>
         </Form>
       </section>
     </main>

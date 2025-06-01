@@ -31,7 +31,7 @@ export default function AdminLayout() {
     <div className="admin-layout font-inter">
       <MobileSidebar />
 
-      <aside className="w-full max-w-[270px] hidden lg:block">
+      <aside className="w-full overflow-y-auto max-w-[270px] hidden lg:block">
         <NavItems />
       </aside>
 
